@@ -1,17 +1,11 @@
 create table user(
-  id SERIAL,
-
-  uuid        VARCHAR NOT NULL UNIQUE,
-  name        VARCHAR NOT NULL,
-  email       VARCHAR NOT NULL UNIQUE,
-  description VARCHAR,
-
-  pfp_img_id    INTEGER,
-  header_img_id INTEGER,
+  id SERIAL NOT NULL,
+  username    VARCHAR(40) NOT NULL UNIQUE,
+  name        VARCHAR(40) NOT NULL,
+  email       VARCHAR(320) NOT NULL UNIQUE,
+  pfp_id      INTEGER,
 
   CONSTRAINT pk_user   PRIMARY KEY (id),
-  CONSTRAINT fk_pfp    FOREIGN KEY (pfp_img_id)
-  REFERENCES  _img(id),
-  CONSTRAINT fk_header FOREIGN KEY (header_img_id)
-  REFERENCES  _img(id)
+  CONSTRAINT fk_pfp    FOREIGN KEY (pfp_id)
+  REFERENCES  image(id)
   );
