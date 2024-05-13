@@ -1,11 +1,14 @@
 create table user(
-  id SERIAL NOT NULL,
-  username    VARCHAR(40) NOT NULL UNIQUE,
-  name        VARCHAR(40) NOT NULL,
-  email       VARCHAR(320) NOT NULL UNIQUE,
-  pfp_id      INTEGER,
+  id int not null unique,
+  username    VARCHAR(20) not null unique,
+  name        varchar(50) not null,
+  email       varchar(320) not null unique,
+  password    varchar(100) not null,
+  pfp_id      integer,
 
-  CONSTRAINT pk_user   PRIMARY KEY (id),
-  CONSTRAINT fk_pfp    FOREIGN KEY (pfp_id)
-  REFERENCES  image(id)
+  constraint pk_user primary key (id),
+  constraint fk_pfp foreign key (pfp_id) references image (id)
   );
+
+--> sample insertion on user
+insert into user (id, username, name, email, password, pfp_id) values (0, "carlos", "carlosU.U", "carlos@carlos.com", "1234", "1");
