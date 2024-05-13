@@ -1,5 +1,5 @@
 create table image(
-  id int not null,
+  id int not null AUTO_INCREMENT,
   type varchar(20),
   image blob,
   width integer,
