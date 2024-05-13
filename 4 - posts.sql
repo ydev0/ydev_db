@@ -1,5 +1,5 @@
 create table posts(
-  id int not null,
+  id int not null AUTO_INCREMENT,
   title varchar(20),
   content blob not null,
 

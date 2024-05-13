@@ -1,9 +1,10 @@
 create table user(
   id int not null unique AUTO_INCREMENT,
-  username    VARCHAR(20) not null unique,
+  username    varchar(20) not null unique,
   name        varchar(50) not null,
   email       varchar(320) not null unique,
   password    varchar(100) not null,
+  root        boolean not null,
   pfp_id      integer,
 
   constraint pk_user primary key (id),
@@ -11,5 +12,4 @@ create table user(
 );
 
 
---> sample insertion on user
-insert into user (id, username, name, email, password, pfp_id) values (0, "carlos", "carlosU.U", "carlos@carlos.com", "1234", "1");
+insert into user (username, name, email, password, root, pfp_id) values ("carlos", "carlosU.U", "carlos@carlos.com", "1234",0, 1) returning id;

@@ -9,4 +9,4 @@ create table image(
 );
 
 --> insert sample
-insert into image (id, type, image, width, height) values (0, ".png", "imagem da silva", 1920, 1080);
+insert into image (type, image, width, height) values (".png", "imagem da silva", 1920, 1080) returning id;
