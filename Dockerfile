@@ -1,21 +1,26 @@
-FROM mysql:latest
+FROM mariadb:11.5.1-ubi9-rc
 
-RUN chown -R mysql:root /var/lib/mysql/
+WORKDIR /workdir/db/
 
+# Set environment variables
+ENV MYSQL_DATABASE=${MYSQL_DATABASE} \
+    MYSQL_USER=${MYSQL_USER} \
+    MYSQL_PASSWORD=${MYSQL_PASSWORD} \
+    MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
-ARG MYSQL_DATABASE
-ARG MYSQL_USER
-ARG MYSQL_PASSWORD
-ARG MYSQL_ROOT_PASSWORD
+# Copy the setup script
+COPY ./complete-setup.sql ./
 
-ENV MYSQL_DATABASE=$MYSQL_DATABASE
-ENV MYSQL_USER=$MYSQL_USER
-ENV MYSQL_PASSWORD=$MYSQL_PASSWORD
-ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+# Ensure proper permissions
+RUN chown mysql:mysql complete-setup.sql && \
+    chmod 644 complete-setup.sql
 
-ADD data.sql /etc/mysql/data.sql
+# Initialize the database
+RUN /usr/bin/mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
-RUN sed -i 's/ydev_db/'ydev_db'/g' /etc/mysql/data.sql
-RUN cp /etc/mysql/data.sql /docker-entrypoint-initdb.d
+# Define the entrypoint
+ENTRYPOINT ["mysqld", "--user=root", "--datadir=/var/lib/mysql", "--init-file=/workdir/db/complete-setup.sql"]
 
+# Expose the MySQL port
 EXPOSE 3306
+
