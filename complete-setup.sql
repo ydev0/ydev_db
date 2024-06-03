@@ -1,4 +1,6 @@
-create database if not exists ydev_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+create database if not exists ydev_db;
+
+ALTER DATABASE ydev_db CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 use ydev_db;
 
